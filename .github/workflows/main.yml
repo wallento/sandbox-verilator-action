@@ -1,0 +1,19 @@
+on:
+  push
+
+jobs:
+  verilator-version:
+    name: Verilator version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verilator version
+        uses: fossi-foundation/verilator-action@v0.1
+        with:
+          version: 5.030
+          arguments: --version
+      - name: Verilator version
+        uses: fossi-foundation/verilator-action@v0.1
+        with:
+          version: 5.030
+          arguments: --lint-only test.v
+          
