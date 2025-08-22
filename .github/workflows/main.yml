@@ -11,7 +11,8 @@ jobs:
         with:
           version: 5.030
           arguments: --version
-      - name: Verilator version
+          
+      - name: Verilator lint
         uses: fossi-foundation/verilator-action@v0.1.1
         with:
           version: 5.030
