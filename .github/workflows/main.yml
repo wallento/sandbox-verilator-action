@@ -12,12 +12,11 @@ jobs:
       - name: Verilator version
         uses: fossi-foundation/verilator-action@move-to-js
         with:
-          version: '5.030'
           arguments: --version
           
       - name: Verilator lint
         uses: fossi-foundation/verilator-action@move-to-js
         with:
-          version: 5.030
+          version: 5.034
           arguments: --lint-only test.v
           
