@@ -4,37 +4,70 @@ jobs:
   verilator-version:
     name: Verilator version
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: fossi-foundation/verilator-action@move-to-js
+      - name: Verilator version
+        uses: fossi-foundation/verilator-action@move-to-js
+        with:
+          arguments: '--version'
+      - name: Verilator version 
+        uses: fossi-foundation/verilator-action@move-to-js
+        with:
+          version: 5.038
+          arguments: '--version'
+      - name: Verilator version
+        uses: fossi-foundation/verilator-action@move-to-js
+        with:
+          version: 5.034
+          arguments: '--version'
+      - name: Verilator version (expected fail)
+        continue-on-error: true
+        uses: fossi-foundation/verilator-action@move-to-js
+        with:
+          version: 5.037
+          arguments: '--version'
+
+  verilator-calls:
+    name: Verilator calls
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-    
-      - name: Verilator version latest
+      - name: Verilator lint as argument
         uses: fossi-foundation/verilator-action@move-to-js
         with:
-          arguments: --version
-      
-      - name: Verilator version 5.034
+          arguments: '--lint-only src/A.v'
+      - name: Verilator lint as argument
         uses: fossi-foundation/verilator-action@move-to-js
         with:
-          version: '5.034'
-          arguments: --version
+          arguments: '--lint-only A.v'
+          working-directory: src
+      - name: Verilator lint as run
+        uses: fossi-foundation/verilator-action@move-to-js
+        with:
+          run: 'verilator --lint-only A.v'
+          working-directory: src
+      - name: Verilator lint as own action
+        uses: fossi-foundation/verilator-action@move-to-js
+        with:
+          lint-files: 'src/A.v'
 
-      - name: Verilator version 5.035 (unknown)
-        uses: fossi-foundation/verilator-action@move-to-js
-        continue-on-error: true
-        with:
-          version: '5.035'
-          arguments: --version        
-      
   verilator-lint:
     name: Verilator lint
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-    
-      - name: Verilator lint
+      - name: Verilator lint A
         uses: fossi-foundation/verilator-action@move-to-js
         with:
-          arguments: --lint-only test.v
-          
+          lint-files: 'src/A.v'
+      - name: Verilator lint B
+        uses: fossi-foundation/verilator-action@move-to-js
+        continue-on-error: true
+        with:
+          lint-files: 'src/B.v'
